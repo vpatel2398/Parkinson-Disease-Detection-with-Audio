@@ -59,10 +59,6 @@
 - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
-    - [Usage](#usage)
-    - [Testing](#testing)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
 - [License](#license)
 - [Acknowledgment](#acknowledgment)
 
@@ -115,26 +111,6 @@ Build Parkinson-Disease-Detection-with-Audio from the source and install depende
 
 ```sh
 ❯ pip install -r requirements.txt
-```
-
-### Usage
-
-Run the project with:
-
-**Using [pip](https://pypi.org/project/pip/):**
-
-```sh
-python {entrypoint}
-```
-
-### Testing
-
-Parkinson-disease-detection-with-audio uses the {__test_framework__} test framework. Run the test suite with:
-
-**Using [pip](https://pypi.org/project/pip/):**
-
-```sh
-pytest
 ```
 
 ---
