@@ -1,163 +1,193 @@
-<div id="top">
+# Parkinson's Disease Detection from Voice
 
-<!-- HEADER STYLE: CLASSIC -->
-<div align="center">
+Machine learning pipeline for detecting Parkinson's disease (PD) from sustained vowel phonation, using acoustic features that capture the vocal symptoms characteristic of PD: reduced pitch range, increased jitter and shimmer, and decreased harmonics-to-noise ratio.
 
-<img src="parkinson.png" width="30%" style="position: relative; top: 0; right: 0;" alt="Project Logo"/>
+This project reproduces and extends the classic [Little et al. (2007)](https://www.nature.com/articles/nature06292) and [Tsanas et al. (2010)](https://ieeexplore.ieee.org/document/5466111) work on voice-based PD detection, with an end-to-end pipeline from raw audio to web-based prediction.
 
-# PARKINSON-DISEASE-DETECTION-WITH-AUDIO
-
-<em>Hear Early, Act Faster, Change Lives Now</em>
-
-<!-- BADGES -->
-<img src="https://img.shields.io/github/license/vpatel2398/Parkinson-Disease-Detection-with-Audio?style=flat&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
-<img src="https://img.shields.io/github/last-commit/vpatel2398/Parkinson-Disease-Detection-with-Audio?style=flat&logo=git&logoColor=white&color=0080ff" alt="last-commit">
-<img src="https://img.shields.io/github/languages/top/vpatel2398/Parkinson-Disease-Detection-with-Audio?style=flat&color=0080ff" alt="repo-top-language">
-<img src="https://img.shields.io/github/languages/count/vpatel2398/Parkinson-Disease-Detection-with-Audio?style=flat&color=0080ff" alt="repo-language-count">
-
-<em>Built with the tools and technologies:</em>
-
-<img src="https://img.shields.io/badge/Flask-000000.svg?style=flat&logo=Flask&logoColor=white" alt="Flask">
-<img src="https://img.shields.io/badge/Markdown-000000.svg?style=flat&logo=Markdown&logoColor=white" alt="Markdown">
-<img src="https://img.shields.io/badge/PostHog-000000.svg?style=flat&logo=PostHog&logoColor=white" alt="PostHog">
-<img src="https://img.shields.io/badge/Wikipedia-000000.svg?style=flat&logo=Wikipedia&logoColor=white" alt="Wikipedia">
-<img src="https://img.shields.io/badge/Keras-D00000.svg?style=flat&logo=Keras&logoColor=white" alt="Keras">
-<img src="https://img.shields.io/badge/Streamlit-FF4B4B.svg?style=flat&logo=Streamlit&logoColor=white" alt="Streamlit">
-<img src="https://img.shields.io/badge/SQLAlchemy-D71F00.svg?style=flat&logo=SQLAlchemy&logoColor=white" alt="SQLAlchemy">
-<img src="https://img.shields.io/badge/TOML-9C4121.svg?style=flat&logo=TOML&logoColor=white" alt="TOML">
-<img src="https://img.shields.io/badge/TensorFlow-FF6F00.svg?style=flat&logo=TensorFlow&logoColor=white" alt="TensorFlow">
-<img src="https://img.shields.io/badge/scikitlearn-F7931E.svg?style=flat&logo=scikit-learn&logoColor=white" alt="scikitlearn">
-<img src="https://img.shields.io/badge/tqdm-FFC107.svg?style=flat&logo=tqdm&logoColor=black" alt="tqdm">
-<img src="https://img.shields.io/badge/Rich-FAE742.svg?style=flat&logo=Rich&logoColor=black" alt="Rich">
-<img src="https://img.shields.io/badge/DuckDB-FFF000.svg?style=flat&logo=DuckDB&logoColor=black" alt="DuckDB">
-<img src="https://img.shields.io/badge/SymPy-3B5526.svg?style=flat&logo=SymPy&logoColor=white" alt="SymPy">
-<img src="https://img.shields.io/badge/FastAPI-009688.svg?style=flat&logo=FastAPI&logoColor=white" alt="FastAPI">
-<br>
-<img src="https://img.shields.io/badge/LangChain-1C3C3C.svg?style=flat&logo=LangChain&logoColor=white" alt="LangChain">
-<img src="https://img.shields.io/badge/NumPy-013243.svg?style=flat&logo=NumPy&logoColor=white" alt="NumPy">
-<img src="https://img.shields.io/badge/Pytest-0A9EDC.svg?style=flat&logo=Pytest&logoColor=white" alt="Pytest">
-<img src="https://img.shields.io/badge/Coveralls-3F5767.svg?style=flat&logo=Coveralls&logoColor=white" alt="Coveralls">
-<img src="https://img.shields.io/badge/Python-3776AB.svg?style=flat&logo=Python&logoColor=white" alt="Python">
-<img src="https://img.shields.io/badge/GitHub%20Actions-2088FF.svg?style=flat&logo=GitHub-Actions&logoColor=white" alt="GitHub%20Actions">
-<img src="https://img.shields.io/badge/Google-4285F4.svg?style=flat&logo=Google&logoColor=white" alt="Google">
-<img src="https://img.shields.io/badge/AIOHTTP-2C5BB4.svg?style=flat&logo=AIOHTTP&logoColor=white" alt="AIOHTTP">
-<img src="https://img.shields.io/badge/SciPy-8CAAE6.svg?style=flat&logo=SciPy&logoColor=white" alt="SciPy">
-<img src="https://img.shields.io/badge/PHP-777BB4.svg?style=flat&logo=PHP&logoColor=white" alt="PHP">
-<img src="https://img.shields.io/badge/pandas-150458.svg?style=flat&logo=pandas&logoColor=white" alt="pandas">
-<img src="https://img.shields.io/badge/OpenAI-412991.svg?style=flat&logo=OpenAI&logoColor=white" alt="OpenAI">
-<img src="https://img.shields.io/badge/Pydantic-E92063.svg?style=flat&logo=Pydantic&logoColor=white" alt="Pydantic">
-<img src="https://img.shields.io/badge/Hypothesis-BD1C2B.svg?style=flat&logo=Hypothesis&logoColor=white" alt="Hypothesis">
-
-</div>
-<br>
+> **Status:** Educational portfolio project. Not a medical device. Predictions are not clinical diagnoses.
 
 ---
 
-## Table of Contents
+## Demo
 
-- [Overview](#overview)
-- [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
-- [License](#license)
-- [Acknowledgment](#acknowledgment)
+A live demo is deployed at: *[link to Hugging Face Space — to be added]*
 
----
+Upload a 5+ second recording of a sustained `/a/` vowel. The system extracts 18 acoustic features using Praat (via `parselmouth`) and returns a calibrated probability score.
 
-## Overview
-
-Parkinson-Disease-Detection-with-Audio is an open-source developer toolkit designed to facilitate early detection of Parkinson's disease through speech analysis. It combines advanced audio processing, machine learning models, and web deployment to create a seamless diagnostic system. 
-
-**Why Parkinson-Disease-Detection-with-Audio?**
-
-This project aims to streamline the development of audio-based health diagnostics. The core features include:
-
-- **🧩** *Audio Feature Extraction:* Comprehensive acoustic and voice quality analysis from audio recordings.
-- **🚀** *End-to-End Web App:* User-friendly interface for uploading audio files and receiving predictions.
-- **🤖** *Machine Learning Pipeline:* Data preprocessing, augmentation, training, and evaluation of neural network models.
-- **🔧** *Deployment & Automation:* CI/CD workflows for reliable deployment to cloud environments.
-- **🎯** *Developer-Focused:* Modular codebase supporting easy customization and integration.
+![Demo Screenshot](docs/demo.png)
 
 ---
 
-## Getting Started
+## Why this project
+
+About **90% of people with Parkinson's develop voice impairments**, often years before motor symptoms become obvious. Acoustic analysis of sustained phonation is non-invasive, low-cost, and can be done remotely — making it a promising tool for early screening and longitudinal monitoring.
+
+Companies like [Winterlight Labs](https://winterlightlabs.com/) (now part of Cambridge Cognition) have built clinical-grade products around this principle. This project is my hands-on exploration of the same problem space.
+
+---
+
+## What the pipeline does
+
+```
+┌──────────────┐     ┌─────────────────┐     ┌──────────────┐     ┌──────────────┐
+│  Raw audio   │ ──► │ Feature         │ ──► │  Classifier  │ ──► │ Calibrated   │
+│  (.wav)      │     │ extraction      │     │  (XGBoost)   │     │ probability  │
+│              │     │ (Praat features)│     │              │     │ + SHAP plot  │
+└──────────────┘     └─────────────────┘     └──────────────┘     └──────────────┘
+```
+
+1. **Audio ingestion** — accepts `.wav` (16 kHz mono recommended)
+2. **Feature extraction** — uses [Praat](https://www.fon.hum.uva.nl/praat/) via `parselmouth` to compute scientifically valid acoustic measures (F0 statistics, jitter, shimmer, HNR)
+3. **Classification** — compares Logistic Regression, SVM, Random Forest, XGBoost, and a small MLP on a 5-fold stratified cross-validation
+4. **Explainability** — SHAP values explain why a specific prediction was made
+
+---
+
+## Dataset
+
+**Primary dataset:** UCI ML Repository [Parkinson's Dataset](https://archive.ics.uci.edu/dataset/174/parkinsons) — 195 sustained-vowel recordings from 31 subjects (23 with PD, 8 healthy), originally curated by Max Little at the University of Oxford.
+
+**Important caveats — read these:**
+
+- The dataset is **small (195 samples)** and **subject-imbalanced**. Naïve cross-validation that splits at the sample level leaks subject identity and inflates accuracy.
+- This project uses **subject-grouped cross-validation** (`GroupKFold`) so the same speaker never appears in both train and test folds. This is the correct evaluation protocol for this dataset and is **omitted in most blog-post tutorials** — which is why their accuracy numbers (often 95%+) are misleading.
+- The original UCI features include nonlinear-dynamics measures (RPDE, DFA, PPE, D2) computed from proprietary research code (Little et al.). These cannot be reliably reproduced from raw audio with standard libraries. **This project uses an 18-feature subset that can be honestly recomputed from any uploaded audio.**
+
+---
+
+## Results
+
+All metrics reported with **subject-grouped 5-fold cross-validation** (mean ± std across folds):
+
+| Model               | Accuracy        | F1 (PD class)   | ROC-AUC          | PR-AUC          |
+|---------------------|-----------------|-----------------|------------------|-----------------|
+| Logistic Regression | 0.746 ± 0.081   | 0.828 ± 0.070   | 0.713 ± 0.149    | 0.882 ± 0.110   |
+| SVM (RBF kernel)    | **0.771** ± 0.076 | **0.861** ± 0.045 | 0.613 ± 0.182  | 0.823 ± 0.100   |
+| Random Forest       | 0.753 ± 0.080   | 0.844 ± 0.055   | **0.789** ± 0.119 | **0.906** ± 0.089 |
+| XGBoost             | 0.748 ± 0.090   | 0.837 ± 0.061   | 0.747 ± 0.129    | 0.884 ± 0.082   |
+
+**Selected model: Random Forest** — best ROC-AUC and PR-AUC. The SVM achieves the highest raw accuracy but its low ROC-AUC (0.613) indicates poor probability calibration, which makes it unsuitable for a screening tool where ranking matters more than thresholded decisions.
+
+### How to read these numbers
+
+The dataset is imbalanced (75% PD recordings), which inflates accuracy and F1. ROC-AUC and PR-AUC are the more meaningful metrics here:
+
+- **PR-AUC of 0.906** for Random Forest means the model ranks PD recordings above healthy recordings with high reliability across the operating curve.
+- **High standard deviations (0.08–0.18)** reflect the small subject pool (31 people). When one heavy-data subject lands in the test fold, performance swings noticeably. This is honest noise, not a bug.
+- **Why ~77% accuracy and not 95%+** like blog tutorials? Most online tutorials use random splits that leak speaker identity between train and test. With proper subject-grouped CV, ~70–85% is consistent with peer-reviewed results on this dataset (e.g. Tsanas et al. 2010).
+
+Confusion matrices, ROC curves, and PR curves are in `results/`.
+
+---
+
+## Tech stack
+
+- **Audio analysis:** `praat-parselmouth` (Praat bindings), `librosa`
+- **Machine learning:** `scikit-learn`, `xgboost`
+- **Explainability:** `shap` (used in `notebooks/02_shap_analysis.ipynb`)
+- **Web app:** `flask`
+- **Deployment:** Hugging Face Spaces
+
+---
+
+## Getting started
 
 ### Prerequisites
 
-This project requires the following dependencies:
-
-- **Programming Language:** HTML
-- **Package Manager:** Pip
+- Python 3.10+
+- `ffmpeg` (for audio decoding)
 
 ### Installation
 
-Build Parkinson-Disease-Detection-with-Audio from the source and install dependencies:
+```bash
+git clone https://github.com/vpatel2398/Parkinson-Disease-Detection-with-Audio.git
+cd Parkinson-Disease-Detection-with-Audio
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
 
-1. **Clone the repository:**
+### Train all models
 
-    ```sh
-    ❯ git clone https://github.com/vpatel2398/Parkinson-Disease-Detection-with-Audio
-    ```
+```bash
+python -m src.train
+```
 
-2. **Navigate to the project directory:**
+This runs the full pipeline: data loading → subject-grouped 5-fold CV across all models → saves metrics, plots, and the best model to `results/`.
 
-    ```sh
-    ❯ cd Parkinson-Disease-Detection-with-Audio
-    ```
+### Predict on an audio file
 
-3. **Install the dependencies:**
+```bash
+python -m src.predict path/to/recording.wav
+```
 
-**Using [pip](https://pypi.org/project/pip/):**
+### Run the web app locally
 
-```sh
-❯ pip install -r requirements.txt
+```bash
+python -m src.app
+# Open http://localhost:5000
 ```
 
 ---
 
-<summary>Contributing Guidelines</summary>
+## Project structure
 
-1. **Fork the Repository**: Start by forking the project repository to your github account.
-2. **Clone Locally**: Clone the forked repository to your local machine using a git client.
-   ```sh
-   git clone https://github.com/vpatel2398/Parkinson-Disease-Detection-with-Audio
-   ```
-3. **Create a New Branch**: Always work on a new branch, giving it a descriptive name.
-   ```sh
-   git checkout -b new-feature-x
-   ```
-4. **Make Your Changes**: Develop and test your changes locally.
-5. **Commit Your Changes**: Commit with a clear message describing your updates.
-   ```sh
-   git commit -m 'Implemented new feature x.'
-   ```
-6. **Push to github**: Push the changes to your forked repository.
-   ```sh
-   git push origin new-feature-x
-   ```
-7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations.
-8. **Review**: Once your PR is reviewed and approved, it will be merged into the main branch. Congratulations on your contribution!
-</details>
+```
+.
+├── src/
+│   ├── features.py        # Acoustic feature extraction via Praat
+│   ├── train.py           # Training + cross-validation across models
+│   ├── predict.py         # Inference on a single audio file
+│   └── app.py             # Flask web app
+├── data/
+│   └── parkinsons.csv     # UCI dataset (committed for reproducibility)
+├── results/               # Generated: metrics, plots, saved models
+├── notebooks/
+│   └── 01_eda.ipynb       # Exploratory data analysis
+├── tests/                 # Unit tests for feature extraction
+├── requirements.txt
+└── README.md
+```
 
-<details closed>
-<summary>Contributor Graph</summary>
-<br>
-<p align="left">
-   <a href="https://github.com{/vpatel2398/Parkinson-Disease-Detection-with-Audio/}graphs/contributors">
-      <img src="https://contrib.rocks/image?repo=vpatel2398/Parkinson-Disease-Detection-with-Audio">
-   </a>
-</p>
-</details>
+---
+
+## What I learned / What I'd do differently
+
+This project went through a complete rewrite after I noticed several problems with my first version. Documenting them here because the lessons are more interesting than the final accuracy number:
+
+1. **Don't fake features at inference time.** My initial code computed 16 features from raw audio and filled in 6 more (RPDE, DFA, etc.) with `np.random.rand()` as placeholders, because I couldn't easily reproduce the original research code. The model was trained on real values and saw noise at inference — predictions on uploaded audio were essentially meaningless. The fix: drop features I can't honestly compute, and clearly document what the remaining set captures.
+
+2. **Audio-domain libraries matter.** I originally computed jitter as `np.mean(np.abs(np.diff(signal)))` on raw audio samples. That's not jitter — real jitter measures cycle-to-cycle period variation, which requires glottal-pulse detection. Switching to Praat (via `parselmouth`) gave me scientifically validated measures in two lines of code.
+
+3. **Subject-level data leakage is the silent accuracy killer.** With 31 subjects and 195 samples, a random 80/20 split puts ~6 recordings per subject in the test set — and the model essentially memorizes voices, not disease patterns. Switching to `GroupKFold` on subject ID dropped accuracy substantially but produced numbers that actually generalize.
+
+4. **Bigger models aren't better.** My first version used a 6-layer dense network (256→128→64→32→16→2) on 22 tabular features. Logistic regression with proper regularization performs comparably and is far more interpretable. For small tabular datasets, classical ML is usually the right answer.
+
+5. **Scale after splitting, not before.** Fitting `StandardScaler` on the full dataset before splitting leaks test-set statistics into training. Small effect, but it adds up with everything else.
+
+---
+
+## Limitations and honest disclosures
+
+- **Not a medical device.** This model has not been clinically validated. It cannot diagnose Parkinson's disease.
+- **Small dataset.** 31 subjects is not enough for population-level claims. The model captures patterns specific to this cohort and may not generalize across demographics, recording equipment, or languages.
+- **Recording conditions matter.** The UCI dataset was recorded in a clinical setting. Predictions on phone-recorded audio will be noisier.
+- **Sustained vowel only.** This pipeline analyzes `/a/` vowel phonation. It does not handle continuous or spontaneous speech.
+
+---
+
+## References
+
+- Little, M. A., et al. (2007). *Suitability of dysphonia measurements for telemonitoring of Parkinson's disease.* Nature Precedings.
+- Tsanas, A., Little, M. A., McSharry, P. E., & Ramig, L. O. (2010). *Accurate telemonitoring of Parkinson's disease progression by noninvasive speech tests.* IEEE Transactions on Biomedical Engineering.
+- Boersma, P., & Weenink, D. (2024). *Praat: doing phonetics by computer.* Version 6.4. http://www.praat.org/
 
 ---
 
 ## License
 
-Parkinson-disease-detection-with-audio is protected under the [LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
+MIT License — see [LICENSE](LICENSE) file.
 
----
+## Contact
 
-
-<div align="left"><a href="#top">⬆ Return</a></div>
-
----
+Vivek Patel — [vpatel2398@gmail.com](mailto:vpatel2398@gmail.com) — [GitHub](https://github.com/vpatel2398)
