@@ -10,11 +10,11 @@ This project reproduces and extends the classic [Little et al. (2007)](https://w
 
 ## Demo
 
-A live demo is deployed at: *[link to Hugging Face Space — to be added]*
+A live demo is deployed at: *[(https://huggingface.co/spaces/vpatel2398/parkinsons-voice-analysis)]*
 
-Upload a 5+ second recording of a sustained `/a/` vowel. The system extracts 18 acoustic features using Praat (via `parselmouth`) and returns a calibrated probability score.
+Record a sustained `/a/` vowel directly in your browser, or upload a `.wav` file. The system extracts 16 acoustic features using Praat and returns a probability score with full feature breakdown.
 
-![Demo Screenshot](docs/demo.png)
+*Deployment in progress — screenshot and live link coming with the next milestone.*
 
 ---
 
@@ -38,7 +38,7 @@ Companies like [Winterlight Labs](https://winterlightlabs.com/) (now part of Cam
 
 1. **Audio ingestion** — accepts `.wav` (16 kHz mono recommended)
 2. **Feature extraction** — uses [Praat](https://www.fon.hum.uva.nl/praat/) via `parselmouth` to compute scientifically valid acoustic measures (F0 statistics, jitter, shimmer, HNR)
-3. **Classification** — compares Logistic Regression, SVM, Random Forest, XGBoost, and a small MLP on a 5-fold stratified cross-validation
+3. **Classification** — compares Logistic Regression, SVM, Random Forest, and XGBoost on subject-grouped 5-fold cross-validation
 4. **Explainability** — SHAP values explain why a specific prediction was made
 
 ---
@@ -51,7 +51,7 @@ Companies like [Winterlight Labs](https://winterlightlabs.com/) (now part of Cam
 
 - The dataset is **small (195 samples)** and **subject-imbalanced**. Naïve cross-validation that splits at the sample level leaks subject identity and inflates accuracy.
 - This project uses **subject-grouped cross-validation** (`GroupKFold`) so the same speaker never appears in both train and test folds. This is the correct evaluation protocol for this dataset and is **omitted in most blog-post tutorials** — which is why their accuracy numbers (often 95%+) are misleading.
-- The original UCI features include nonlinear-dynamics measures (RPDE, DFA, PPE, D2) computed from proprietary research code (Little et al.). These cannot be reliably reproduced from raw audio with standard libraries. **This project uses an 18-feature subset that can be honestly recomputed from any uploaded audio.**
+- The original UCI features include nonlinear-dynamics measures (RPDE, DFA, PPE, D2) computed from proprietary research code (Little et al.). These cannot be reliably reproduced from raw audio with standard libraries. **This project uses a 16-feature subset that can be honestly recomputed from any uploaded audio.**
 
 ---
 
